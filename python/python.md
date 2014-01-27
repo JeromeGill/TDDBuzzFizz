@@ -10,3 +10,11 @@ To run the tests
     $nosetests FizzBuzzTest.py```
 
 http://www.diveintopython.net/
+
+Initially I tried to write my tests in a FizzBuzzTest.py file. Reading up on how python unit testers work, it turns out the file name should have a test prefix, ie testFizzBuzz. This allows the runner to recognise the file. 
+
+Upon realising that the directory structure of both files in the same place wouldn't scale, I moved FizzBuzz to a src/ directory and testFizzBuzz to a test/ directory.
+
+This introduced the problem of including FizzBuzz as a dependancy for the test class. Python was no longer able to find it. A bit of googling later, I found an __init__.py file adds that directory to pythons path, similar to how adding a .gitignore file enables versioning of an otherwise empty directory.
+
+After some syntatic twiddling I got some failing assertion tests.
