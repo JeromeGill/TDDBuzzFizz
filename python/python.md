@@ -7,4 +7,6 @@ Alternative solutions can be placed in their own class but as the expected resul
 To run the tests 
 
 ```$cd /opt/TDDBuzzFizz/python/
-    $python -m unittest FizzBuzzTest```
+    $nosetests FizzBuzzTest.py```
+
+http://www.diveintopython.net/
