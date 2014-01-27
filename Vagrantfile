@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
     v.customize ["modifyvm", :id, "--name", "tddbuzzfizz"]
   end
 
-  config.vm.synced_folder "./", "/opt/JSilky/", id: "vagrant-root"
+  config.vm.synced_folder "./python", "/opt/TDDBuzzFizz/python", id: "vagrant-root"
   config.vm.provision "shell", path: "provision/provision.sh"
 
 end
