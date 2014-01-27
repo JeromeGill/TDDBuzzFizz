@@ -18,7 +18,7 @@ Upon realising that the directory structure of both files in the same place woul
 This introduced the problem of including FizzBuzz as a dependancy for the test class. Python was no longer able to find it. A bit of googling later, I found an __init__.py file adds that directory to pythons path, similar to how adding a .gitignore file enables versioning of an otherwise empty directory.
 
 After some syntatic twiddling I got some failing assertion tests.
-```
+```python
 class FizzBuzzTest(TestCase):
     """docstring for FizzBuzzTest"""
     def setUp(self):
@@ -47,7 +47,7 @@ class FizzBuzzTest(TestCase):
 
  so I began to write a solution. It looked like this,
 
-```
+```python
 class FizzBuzz:
     """Return Fizz for multiples of 3, 
     Buzz for multiples of 5, 
@@ -91,7 +91,7 @@ Ran 6 tests in 0.005s
 
 FizzBuzz worked, Buzz worked and a numeric output worked. What didn't work was Fizz. Pretty weird as FizzBuzz worked. A closer look at the solution above I was able to quickly work out that Fizz would be overwritten by 'a' if it was not a multiple of 5. The problem being that changing to an else if structure would just swap the failing situation. It needed a bit of duplication.
 
-```
+```python
 def fizzBuzz(self, a):
         result = ''
         if a % 5 == 0 and a % 3 == 0:
