@@ -18,3 +18,89 @@ Upon realising that the directory structure of both files in the same place woul
 This introduced the problem of including FizzBuzz as a dependancy for the test class. Python was no longer able to find it. A bit of googling later, I found an __init__.py file adds that directory to pythons path, similar to how adding a .gitignore file enables versioning of an otherwise empty directory.
 
 After some syntatic twiddling I got some failing assertion tests.
+```
+class FizzBuzzTest(TestCase):
+    """docstring for FizzBuzzTest"""
+    def setUp(self):
+        self.FizzBuzz = FizzBuzz();
+    def testFizz3(self):
+        result = FizzBuzz.fizzBuzz(self.FizzBuzz, 3)
+        self.assertEqual(result,'Fizz')
+    def testBuzz5(self):
+        result = FizzBuzz.fizzBuzz(self.FizzBuzz, 5)
+        self.assertEqual(result,'Buzz')
+    def testFizzBuzz15(self):
+        result = FizzBuzz.fizzBuzz(self.FizzBuzz, 15)
+        self.assertEqual(result,'FizzBuzz')
+    def testFizzBuzz600(self):
+        result = FizzBuzz.fizzBuzz(self.FizzBuzz, 600)
+        self.assertEqual(result,'FizzBuzz')
+    def testFizzBuzz603(self):
+        result = FizzBuzz.fizzBuzz(self.FizzBuzz, 603)
+        self.assertEqual(result,'Fizz')
+    def testNumericOut(self):
+        result = FizzBuzz.fizzBuzz(self.FizzBuzz, 22)
+        self.assertEqual(result,22)
+```
+
+
+
+ so I began to write a solution. It looked like this,
+
+```
+class FizzBuzz:
+    """Return Fizz for multiples of 3, 
+    Buzz for multiples of 5, 
+    FizzBuzz for both"""
+    def fizzBuzz(self, a):
+        result = ''
+        if a % 3 == 0:
+            result += 'Fizz'
+        if a % 5 == 0:
+            result += 'Buzz'
+        else:
+            result = a
+        return result
+```
+
+Spot the mistake?
+
+Well the test output looked like this...
+
+```
+.F..F.
+======================================================================
+FAIL: testFizz3 (test.testFizzBuzz.FizzBuzzTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/TDDBuzzFizz/python/test/testFizzBuzz.py", line 10, in testFizz3
+    self.assertEqual(result,'Fizz')
+AssertionError: 3 != 'Fizz'
+
+======================================================================
+FAIL: testFizzBuzz603 (test.testFizzBuzz.FizzBuzzTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/TDDBuzzFizz/python/test/testFizzBuzz.py", line 22, in testFizzBuzz603
+    self.assertEqual(result,'Fizz')
+AssertionError: 3 != 'Fizz'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.005s
+```
+
+FizzBuzz worked, Buzz worked and a numeric output worked. What didn't work was Fizz. Pretty weird as FizzBuzz worked. A closer look at the solution above I was able to quickly work out that Fizz would be overwritten by 'a' if it was not a multiple of 5. The problem being that changing to an else if structure would just swap the failing situation. It needed a bit of duplication.
+
+```
+def fizzBuzz(self, a):
+        result = ''
+        if a % 5 == 0 and a % 3 == 0:
+            result += 'FizzBuzz'
+        elif a % 3 == 0:
+            result += 'Fizz'
+        elif a % 5 == 0:
+            result += 'Buzz'          
+        else:
+            result = a
+        return result
+```
