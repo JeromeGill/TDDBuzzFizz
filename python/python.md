@@ -104,3 +104,4 @@ def fizzBuzz(self, a):
             result = a
         return result
 ```
+Voila, 0 to FizzBuzz in a day. 6 passing tests.
